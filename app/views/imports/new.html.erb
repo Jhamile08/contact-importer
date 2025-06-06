@@ -1,0 +1,12 @@
+<h1>Subir archivo CSV</h1>
+
+<%= form_with model: @import, url: imports_path, local: true, multipart: true do |form| %>
+  <div>
+    <%= form.label :file, "Selecciona tu archivo CSV" %><br>
+    <%= form.file_field :file %>
+  </div>
+
+  <br>
+
+  <%= form.submit "Subir y procesar", class: "btn btn-primary" %>
+<% end %>

@@ -1,0 +1,24 @@
+<h1>Mis Importaciones</h1>
+
+<%= link_to "Subir nuevo archivo CSV", new_import_path, class: "btn btn-primary" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Fecha de subida</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @imports.each do |import| %>
+      <tr>
+        <td><%= import.id %></td>
+        <td><%= import.created_at.strftime("%d/%m/%Y %H:%M") %></td>
+        <td><%= import.status.humanize %></td>
+        <td><%= link_to "Ver", import_path(import) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
