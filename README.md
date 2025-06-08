@@ -61,7 +61,7 @@ gem install bundler
 ```bash
 bundle install
 ```
-## Create .env for database configuration
+## Create .env for radis configuration
 ```bash
 RAILS_MASTER_KEY=cf797dcf5a49c0183358328cdd3958c2
 REDIS_URL=rediss://default:AWgrAAIjcDEzMDc2ZDVjNTgxODQ0YzkxOTgyZDdjNmIxY2IyNjkwY3AxMA@certain-roughy-26667.upstash.io:6379
