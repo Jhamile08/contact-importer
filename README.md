@@ -18,28 +18,53 @@ The app uses:
 
 ## Setup instructions
 
-If you don't have Rails installed:
-
-```bash
-gem install rails -v 7.2.2.1
-```
-
 ## Clone the project:
 ```bash
 git clone https://github.com/your-username/csv-contact-importer.git
-cd csv-contact-importer
+cd contact-importer
+```
+
+If you don't have Rails installed:
+
+```bash
+# Update package list and install required build dependencies
+sudo apt update
+sudo apt install -y git curl libssl-dev libreadline-dev zlib1g-dev build-essential libffi-dev libyaml-dev
+
+# Install rbenv and ruby-build using the official installer script
+curl -fsSL https://github.com/rbenv/rbenv-installer/raw/main/bin/rbenv-installer | bash
+
+# Add rbenv to PATH and initialize it (for bash shell)
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(rbenv init - bash)"' >> ~/.bashrc
+source ~/.bashrc
+
+# Install Ruby (example: version 3.2.2)
+rbenv install 3.2.2
+rbenv global 3.2.2
+
+# Verify the installed Ruby version
+ruby -v
+
+# Install Bundler gem
+gem install bundler
 ```
 ## Install dependencies:
 ```bash
 bundle install
 ```
-## Set up the database:
+## Create .env for database configuration
 ```bash
-rails db:setup
+RAILS_MASTER_KEY=cf797dcf5a49c0183358328cdd3958c2
+REDIS_URL=rediss://default:AWgrAAIjcDEzMDc2ZDVjNTgxODQ0YzkxOTgyZDdjNmIxY2IyNjkwY3AxMA@certain-roughy-26667.upstash.io:6379
+ACTION_CABLE_FRONTEND_URL=wss://your-app-name.onrender.com/cable
+APP_HOST=https://contact-importer.onrender.com
 ```
-If you want to reset it later:
+Next step: configure your development database credentials in `config/database.yml`.  
+Make sure it points to your local PostgreSQL database or use `ENV["DATABASE_URL"]`.
+## Create and migrate database:
 ```bash
-rails db:drop db:create db:migrate
+bin/rails db:create db:migrate
 ```
 ## Start Redis (required for Sidekiq):
 If you have Redis installed:
@@ -62,5 +87,6 @@ bundle exec sidekiq
 ```
 ## Run the Rails server:
 ```bash
-bin/dev
+rails s
 ```
+## Open http://localhost:3000 in your browser.
