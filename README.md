@@ -16,6 +16,14 @@ The app uses:
 - Redis
 - PostgreSQL
 
+## 🌐 Live Demo
+
+You can access the deployed application at:
+
+👉 [https://contact-importer.onrender.com/](https://contact-importer.onrender.com/)
+
+This is a working demo of the contact importer app, including file uploads, background processing with Sidekiq, and real-time updates using Turbo Streams.
+
 ## Setup instructions
 
 ## Clone the project:
