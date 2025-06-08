@@ -1,0 +1,82 @@
+<!-- ✅ Abre aquí -->
+<div id="import_<%= import.id %>">
+
+  <div style="display:flex; align-items:center; gap:20px; justify-content:center">
+    <h1 style="font-size: 30px;">File Import</h1>
+
+    <p style="margin:0"><strong>Status:</strong> <%= import.status.humanize %></p>
+    <p style="margin:0"><strong>Uploaded at:</strong> <%= import.created_at.strftime("%d/%m/%Y %H:%M") %></p>
+
+  </div>
+
+  <% if import.processing? || import.on_hold? %>
+    <p><em>Processing file... please wait.</em></p>
+  <% end %>
+
+  <hr>
+
+  <h2>Imported Contacts</h2>
+
+  <% if contacts.any? %>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th>Date of Birth</th>
+          <th>Card Network</th>
+          <th>Card (Last 4)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% contacts.each do |c| %>
+          <tr>
+            <td><%= c.name %></td>
+            <td><%= c.email %></td>
+            <td><%= c.phone %></td>
+            <td><%= c.address %></td>
+            <td><%= c.dob.strftime("%Y %B %-d") rescue "-" %></td>
+            <td><%= c.cc_network %></td>
+            <td><%= c.encrypted_cc[-4..] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate contacts if contacts.respond_to?(:total_pages) %>
+  <% else %>
+    <p>No contacts were imported.</p>
+  <% end %>
+
+  <hr>
+
+  <h2>Import Errors</h2>
+
+  <% if errors.any? %>
+    <table>
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Error Message</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% errors.each do |e| %>
+          <tr>
+            <td><%= e.contact_data.to_json %></td>
+            <td><%= e.error_message %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate errors if errors.respond_to?(:total_pages) %>
+  <% else %>
+    <p>No errors were found during import.</p>
+  <% end %>
+
+  <hr>
+
+
+<!-- ✅ CIERRA AQUÍ -->
+</div>

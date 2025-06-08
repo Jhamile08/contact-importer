@@ -5,30 +5,43 @@ class ProcessCsvJob < ApplicationJob
 
   def perform(import_id)
     import = Import.find(import_id)
-    import.processing!
+    import.update(status: :processing)
 
-    file = import.file.download
+    file = import.file.download.force_encoding("UTF-8")
     csv = CSV.parse(file, headers: true)
 
     success = 0
+    mapping = import.column_mapping || {}
 
     csv.each do |row|
       begin
-        ContactUser.create_from_csv(row.to_h, import.user, import)
+        # Mapea las columnas según lo seleccionado por el usuario
+        mapped_row = {}
+
+        mapping.each do |expected_field, column_name|
+          mapped_row[expected_field] = row[column_name]
+        end
+
+        ContactUser.create_from_csv(mapped_row, import.user, import)
         success += 1
       rescue => e
-        # Ya se registra error dentro del modelo
+        # Los errores ya se registran en el modelo
         next
       end
     end
 
+    # Actualiza el estado según el resultado
     if success > 0
-      import.finished!
+      import.update(status: :finished)
+      
     else
-      import.failed!
+      import.update(status: :failed)
     end
+
+
+
   rescue => e
-    import.failed!
+    import.update(status: :failed)
     import.import_errors.create(
       contact_data: {},
       error_message: "Error al procesar archivo: #{e.message}"

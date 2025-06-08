@@ -1,66 +1,9 @@
-<h1>Importación de archivo</h1>
-
-<p><strong>Estado:</strong> <%= @import.status.humanize %></p>
-<p><strong>Fecha de carga:</strong> <%= @import.created_at.strftime("%d/%m/%Y %H:%M") %></p>
-
-<hr>
-
-<h2> Contactos Importados</h2>
-<% if @contacts.any? %>
-  <table>
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Email</th>
-        <th>Teléfono</th>
-        <th>Dirección</th>
-        <th>Fecha Nac.</th>
-        <th>Red</th>
-        <th>Tarjeta (últimos 4)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @contacts.each do |c| %>
-        <tr>
-          <td><%= c.name %></td>
-          <td><%= c.email %></td>
-          <td><%= c.phone %></td>
-          <td><%= c.address %></td>
-          <td><%= c.dob.strftime("%Y %B %-d") rescue "-" %></td>
-          <td><%= c.cc_network %></td>
-          <td><%= c.encrypted_cc[-4..] %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
-  <%= paginate @contacts %>
-<% else %>
-  <p>No se importaron contactos.</p>
-<% end %>
-
-<hr>
-
-<h2> Errores en la Importación</h2>
-<% if @errors.any? %>
-  <table>
-    <thead>
-      <tr>
-        <th>Datos</th>
-        <th>Error</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @errors.each do |e| %>
-        <tr>
-          <td><%= e.contact_data.to_json %></td>
-          <td><%= e.error_message %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
-  <%= paginate @errors %>
-<% else %>
-  <p>No hubo errores.</p>
-<% end %>
+<%= turbo_stream_from "imports" %>
+<%= turbo_frame_tag "import_#{@import.id}" do %>
+<%= render partial: "import", locals: {
+  import: @import,
+  contacts: @contacts,
+  errors: @errors
+  } %>
+  <% end %>
+<%= link_to 'Back to Import List', imports_path, class: 'btn btn-secondary' %>

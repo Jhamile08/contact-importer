@@ -1,14 +1,16 @@
-<h1>Mis Importaciones</h1>
+<h1>My Imports</h1>
 
-<%= link_to "Subir nuevo archivo CSV", new_import_path, class: "btn btn-primary" %>
+<!-- Link to upload a new CSV file -->
+<%= link_to "Upload new CSV file", new_import_path, class: "btn btn-primary" %>
 
+<!-- Table of import history -->
 <table>
   <thead>
     <tr>
       <th>ID</th>
-      <th>Fecha de subida</th>
-      <th>Estado</th>
-      <th>Acciones</th>
+      <th>Uploaded At</th>
+      <th>Status</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -17,8 +19,11 @@
         <td><%= import.id %></td>
         <td><%= import.created_at.strftime("%d/%m/%Y %H:%M") %></td>
         <td><%= import.status.humanize %></td>
-        <td><%= link_to "Ver", import_path(import) %></td>
+        <td><%= link_to "View", import_path(import), class: "btn btn-sm btn-outline-secondary" %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<!-- Pagination controls -->
+<%= paginate @imports %>

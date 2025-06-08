@@ -1,0 +1,24 @@
+<h2>Map CSV Columns</h2>
+
+<!-- Form to select which column corresponds to each contact field -->
+<%= form_with url: process_mapped_import_path(@import), method: :post do %>
+<p>Match each field with the correct column from your CSV file.</p>
+  <% ['name', 'date_of_birth', 'phone', 'address', 'email', 'credit_card_number'].each do |field| %>
+    <div>
+      <!-- Label for each field (name, email, etc.) -->
+      <%= label_tag field, "Column for #{field.humanize}:" %>
+
+      <!-- Dropdown to choose which CSV column maps to this field -->
+      <%= select_tag "mapping[#{field}]", options_for_select(@headers), include_blank: true %>
+    </div>
+  <% end %>
+
+  <br>
+
+  <!-- Submit button to start processing -->
+  <%= submit_tag "Process File", class: "btn btn-primary" %>
+  
+  <!-- Link to go back to the list of previous imports -->
+  <%= link_to 'Back to Import List', imports_path, class: 'btn btn-secondary' %>
+
+<% end %>
