@@ -36,7 +36,8 @@ gem 'activeadmin'
 gem 'sassc-rails'
 
 gem 'csv'
-gem 'sidekiq' 
+gem "sidekiq", "~> 7.2"
+
 gem "redis"
 
 gem "turbo-rails"
