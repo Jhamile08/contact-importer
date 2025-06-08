@@ -1,8 +1,10 @@
 <h1>My Imports</h1>
 
 <!-- Link to upload a new CSV file -->
+<div style="display:flex; justify-content: space-evenly">
 <%= link_to "Upload new CSV file", new_import_path, class: "btn btn-primary" %>
-
+<%= button_to "Logout", destroy_user_session_path, method: :delete %>
+</div>
 <!-- Table of import history -->
 <table>
   <thead>
