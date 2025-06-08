@@ -32,7 +32,7 @@ def process_mapped
   mapping = params[:mapping]
   @import.update(column_mapping: mapping)
 
-  ProcessCsvJob.perform_later(@import.id)  # ✅ lanza el procesamiento en segundo plano
+  ProcessCsvJob.perform_later(@import.id) 
 
   redirect_to import_path(@import), notice: "Processing file..."
 end
