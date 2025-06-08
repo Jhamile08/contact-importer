@@ -10,7 +10,7 @@ services:
           name: contact-db
           property: connectionString
       - key: REDIS_URL
-        value: redis://default:AWgrAAIjcDEzMDc2ZDVjNTgxODQ0YzkxOTgyZDdjNmIxY2IyNjkwY3AxMA@certain-roughy-26667.upstash.io:6379
+        value: rediss://default:AWgrAAIjcDEzMDc2ZDVjNTgxODQ0YzkxOTgyZDdjNmIxY2IyNjkwY3AxMA@certain-roughy-26667.upstash.io:6379
       - key: RAILS_ENV
         value: production
       - key: RAILS_MASTER_KEY
@@ -26,7 +26,7 @@ services:
           name: contact-web
           key: DATABASE_URL
       - key: REDIS_URL
-        value: redis://default:AWgrAAIjcDEzMDc2ZDVjNTgxODQ0YzkxOTgyZDdjNmIxY2IyNjkwY3AxMA@certain-roughy-26667.upstash.io:6379
+        value: rediss://default:AWgrAAIjcDEzMDc2ZDVjNTgxODQ0YzkxOTgyZDdjNmIxY2IyNjkwY3AxMA@certain-roughy-26667.upstash.io:6379
       - key: RAILS_ENV
         value: production
       - key: RAILS_MASTER_KEY
